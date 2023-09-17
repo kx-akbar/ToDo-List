@@ -1,13 +1,17 @@
 "use stcict";
 
+// Selectors
 const form = document.getElementById("form");
-const ul = document.querySelector("ul");
+const list = document.querySelector("ul");
 const bugText = document.querySelector('p');
 const typeInp = document.getElementById("todo-inp");
 const themeBtn = document.getElementById('theme-btn');
 const body = document.querySelector('body');
+// /Selectors
 
+// =============================================================================
 
+// Theme
 themeBtn.addEventListener('click', () => {
     body.classList.toggle('black');
     if(themeBtn.innerText == 'OFF'){
@@ -15,42 +19,49 @@ themeBtn.addEventListener('click', () => {
     }else{
         themeBtn.innerText = 'OFF';
     }
-})
+    typeInp.classList.add('form-inp');
+});
+// /Theme
 
+// =============================================================================
+
+// Form Submit
 form.addEventListener("submit", (event) => {
     event.preventDefault();
     todoType();
 });
 
-window.onload = () => {
-    console.log(localStorage.getItem('inp-text'));
-}
 
 function todoType() {
     const errorText = "Please Enter Your Text";
-    if (typeInp.value == 0) {
+    if (typeInp.value <= 0) {
         bugText.style.opacity = "1";
         bugText.innerText = errorText;
         bugText.classList.add('error-text');
-    } else {
+        typeInp.style.border = "2px solid red";
+    }else {
+        typeInp.style.border = "none";
+        bugText.style.opacity = "0";
         let newText = typeInp.value;
         newText.trim();
         const newList = document.createElement("li");
         newList.innerText = newText;
         localStorage.setItem('inp-text', newText);
         newList.classList.add("list-item");
-        ul.appendChild(newList);
+        list.appendChild(newList);
         typeInp.value = "";
         const editBtn = document.createElement("i");
         editBtn.innerHTML = `<i class="fa-solid fa-pen"></i>`;
         newList.appendChild(editBtn);
-        // ==========================================================
+
+        // =============================================================================
+
         const deletedBtn = document.createElement("i");
         deletedBtn.innerHTML = `<i class="fa-solid fa-trash"></i>`;
         newList.appendChild(deletedBtn);
 
         editBtn.addEventListener("click", () => {
-            typeInp.value += localStorage.getItem('inp-text');
+            typeInp.value += localStorage.getItem('inp-text').trim();
             newList.remove();
 
         });
@@ -58,5 +69,6 @@ function todoType() {
         deletedBtn.addEventListener("click", () => {
             newList.remove();
         });
-    }
-}
+    };
+};
+// Form Submit
