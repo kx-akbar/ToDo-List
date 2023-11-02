@@ -7,7 +7,25 @@ const bugText = document.querySelector("p");
 const typeInp = document.getElementById("todo-inp");
 const themeBtn = document.getElementById("theme-btn");
 const body = document.querySelector("body");
+const data = document.getElementById("data");
+const newData = document.getElementById("new-data");
 // /Selectors
+
+// =============================================================================
+
+// new Date
+
+function getDate() {
+  let date = new Date();
+  data.textContent = `${date.getHours()}:${date.getMinutes()}`;
+  newData.textContent = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+}
+
+setInterval(function () {
+  getDate();
+}, 10);
+
+// /new Date
 
 // =============================================================================
 
@@ -16,8 +34,12 @@ themeBtn.addEventListener("click", () => {
   body.classList.toggle("black");
   if (themeBtn.innerText == "OFF") {
     themeBtn.innerText = "ON";
+    data.style.color = "#000";
+    newData.style.color = "rgb(63, 62, 62)";
   } else {
+    data.style.color = "#fff";
     themeBtn.innerText = "OFF";
+    newData.style.color = "#fff";
   }
   typeInp.classList.add("form-inp");
 });
